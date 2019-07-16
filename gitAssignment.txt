@@ -1,0 +1,32 @@
+Perform the following scenario involving Git. Divide yourselves in pairs and perform the following tasks.
+
+1. Sam and Jack are working together on a shared project MY_PROJECT that is stored in a remote Git repository. Jack performs a clone on the remote repository. What 2 things does Git create when Jack issues the git clone command?
+
+Answer : git clone : it will create a local repository in local system
+
+After this, Jack edits a file in the project MY_PROJECT called myfile.py. Then, he does a commit and a push. What does Git do when Jack issues these commands?
+
+Answer:
+add:  adds it to the index (marked to indicate ready to commit)
+commit: saved the changes to the local repo
+push: push the changes to the remote repo
+
+Next, Sam does a clone on MY_PROJECT. Then, Sam and Jack both edit myfile.py simultaneously. The file myfile.py has over 200 lines of code. Sam edits a couple lines at the top of the file, and Jack edits a couple lines at the bottom of the file. Then, Jack does a commit and a push. Finally, Sam does a commit and a push. What does Git do when Sam issues the push command?
+
+Answer:
+push command fired by sam will say: Updates were rejected because the remote contains work that you do not have locally.
+
+
+What Git commands should Sam issue next and what would the result of these commands be?
+pull
+add
+commit
+push
+
+
+2. Consider a Git repository (“repo”) with one commit and one branch (master). A user makes a new commit to the repo. Draw a box-and-line diagram of the repo like the diagrams shown in class. Include all commit nodes (with made-up hashes), all HEAD nodes, and all branch nodes.
+
+Ans: git2Ans
+
+3. Continuing the previous scenario, the user creates and checks out a new branch “my-branch” and then makes a new commit. Update the previous diagram to reflect these actions.
+Ans: git3Ans
