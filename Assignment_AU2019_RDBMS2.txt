@@ -1,0 +1,151 @@
+
+**** Use HR schema wherever tables details are not mentioned ****
+-----------------------------------------------------------------------------------------------------------------------------------
+
+1) Display the first name and join date of the employees who joined between 2002 and 2005.
+
+select  f_name, j_date from employee  where  EXTRACT( YEAR FROM j_date) between  2002 and 2005 ; 
+
+
+2) Display details of departments in which the maximum salary is more than 10000.
+
+select  e.department_id , max(salary)  sal 
+from employees e
+join
+departments d
+on e.department_id = d.department_id
+group by 1
+having  sal > 10000
+
+
+3) Display city, departments, number of employee in each department.
+Question not clear
+
+
+4) Display Departments where there are more then 5 employees.
+
+select department_id, count(employee_id) e_count
+from employee e 
+join 
+departments d 
+on d.department_id = e.department_id
+group by 1
+having e_count>5 
+
+5) Create two tables - Color (Color_id,Color_Name) populate it with 5-6 color data
+                       Sizes (Size_code,Description) e.g.('M',Medium) populate table with sizes XS,S,M,L,XL,XXL.
+   Q) Write Query to Display all possible combinations of color and size.
+
+select c.Color_id, Color_name, Size_code
+from Color c
+join
+Sizes s
+on s.Color_id = s.Color_id
+
+6) Create a table  Cricket_Match with following columns and populate it with data given. 
+-------------------------------------
+       Match Player Score
+-------------------------------------	
+        1      A      0
+	1      B      101
+	1      C      55
+	1      D      23
+	1      E      12
+	1      F      100
+	2      A      146
+	2      B      120
+	2      C      104
+	2      D      3
+	2      E      54
+	2      F      111
+------------------------------------
+
+  Q) Write query to display players who have scored century in both the games.
+  Q) Write query to display players who have scored century in match 1 OR match 2 but not in both.
+
+Q1 
+select distinct Player  from Cricket_Match 
+where Score >=100 and Match_Number in (1,2);
+
+Q2
+
+select distinct Player  from Cricket_Match 
+where Score >=100 
+and Player not in (
+select distinct Player  from Cricket_Match 
+where Score >=100 and Match_Number in (1,2));
+
+
+7)  Create a table friend_list(Name, Friend_Name)
+Populate it with following data:
+        ------------------ 
+	Name | Friend_Name 
+        ------------------
+	Sam      Ram
+	Sam      Vamsi
+	Vamsi    Ram
+	Vamsi    Jhon
+	Ram      Vijay
+	Ram      Anand
+
+write a query to find friends of friends of sam. 
+SELECT  f1.p_name,
+        f2.friend_name as friend_of_friend
+FROM    friend_list f1,
+        friend_list f2
+WHERE   f1.p_name = 'sam'
+AND     f1.friend_name = f2.p_name;
+
+Desired O/P
+-----------------------------
+Name, Friend_of_Firend of SAM.
+-----------------------------
+sam,    ram
+sam,    jhon
+sam,    vijay
+sam,    anand
+-----------------------------
+
+8) Create a function to calculate new salary of an employee from hr.employees table by a certain percentage.
+   Two IN parameters (Employee_id,Hike_pct) 
+   One OUT parameter (New_Salary) 
+
+drop function CalcIncome;
+DELIMITER //
+
+CREATE FUNCTION CalcIncome ( employee_id INT,salary double , starting_value INT )
+RETURNS INT
+ DETERMINISTIC
+BEGIN
+
+    DECLARE id INT;
+    DECLARE sal double;
+
+	SET sal = salary+salary*(starting_value/100);
+
+   
+	-- select salary+salary*(starting_value/100) into  sal from employees
+    -- where employee_id = id; 
+    
+   RETURN sal;
+
+END; //
+
+DELIMITER ;
+
+SELECT employee_id,CalcIncome(employee_id,salary,10)  new_salary from employees;
+
+
+9) Create a stored procedure to update the salary of an employee by 13% in hr.employees table.
+   One IN parameter - emp_id 
+   *** Use the function created in previous question to calculate new salary. 
+
+
+   DELIMITER //
+ CREATE PROCEDURE procedureSalaryHike(IN hike int)
+   BEGIN
+		select  employee_id,CalcIncome(employee_id,salary,hike) from employees;
+   END //
+ DELIMITER ;\
+ 
+call procedureSalaryHike(13);
