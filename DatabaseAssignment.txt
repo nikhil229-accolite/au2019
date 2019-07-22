@@ -1,0 +1,154 @@
+xDesign a system to store all the data with respect to Cricket World cup which recently ended. Design should be scalable to store data for the world cup matches upcoming in the future. 
+
+1) Define all the entities. Design an ER diagram with it's cardinality ratio. Define all the attributes.
+Entities: 
+Game: 	stores the match wise details. As m_id as primary key
+	m-id: match id;
+	Dom: Date of match;
+	Extras: extras in a match multi valued attribute (added as a seperate entity )
+	Won: winning team;
+	max_run_scorer: person acheived max runs in a match
+	max_runs: max runs acheived by the person
+	max_wicket_taker: --
+	max_wickets: -- 
+
+Extras:	Stores extras per  match by seperate teams;
+`	m_id: match id;
+	t_name: team name;
+	lb: leg by
+	wide: --
+	noball:
+	fh: free hit
+	primary key(m_id+t_name)
+
+Team_Stats: Stores details of the match player wise
+	m_id: match id
+	t_name: team name
+	p_id: id of the player odd for batsman even for bowler 
+	runs: runs scored by player
+	wickets: wicket taken by the player
+	sixes: --
+	fours: --
+	primary key(mid+t_name+p_id)
+
+Scrores(player Details): Stores player Details
+	t_name: team name
+	p_id: id of the player odd for batsman even for bowler 
+	p_fname: player first name
+	p_Mname: player middle name
+	p_lname: player last name
+	runs: over all runs scored by the player in this career
+	wicket: over wicket taken by the player in this career
+	primary key(t_name,p_id)
+
+match_played:	it is a points table which shows how many matches  team has played, won and lost 
+	t_name : team name;
+	played: matches played
+	won:
+	lost:
+	points:
+	primary key(t_name);
+
+2) Create the schema with all the constraints needed.
+
+Database Product Name: MySQL
+Database Product Version: 8.0.16
+Logged User: root@localhost
+JDBC Driver: MySQL Connector Java
+Driver Version: mysql-connector-java-5.1.47 ( Revision: fe1903b1ecb4a96a917f7ed3190d80c049b1de29 )
+
+
+EXTRAS
+m_id INT FOREIGN KEY REFERENCES Game(m_id)
+t_name CHAR not null
+wide INT 10
+lb INT 10
+nb INT 10
+fh INT 10
+
+
+
+GAME
+m_id int NOT NULL PRIMARY KEY
+dom DATE 10
+won VARCHAR 256
+max_run_scored VARCHAR 256
+max_runs INT 10
+max_wicket_taker VARCHAR 256
+max_wickets INT 10
+extras INT 10
+
+
+MATCHPLAYED
+t_name VARCHAR 
+played INT 10
+won INT 10
+lost INT 10
+points INT 10
+
+
+SCORES
+t_name VARCHAR FOREIGN KEY REFERENCES TEAM_STATS(t_name);
+p_id INT 10
+p_fname CHAR 255
+p_Mname CHAR 255
+p_lname CHAR 255
+runs INT 10
+wicket INT 10
+
+
+TEAM_STATS
+m_id INT FOREIGN KEY REFERENCES Game(m_id)
+t_name VARCHAR FOREIGN KEY REFERENCES MATCHPLAYED(t_name);
+p_id INT FOREIGN KEY REFERENCES MATCHPLAYED(p_id);
+runs INT 10
+wicket INT 10
+sixes INT 10
+fours INT 10
+
+
+
+3) Create sample data in all the tables.
+Refer script.sql 
+
+4) Fetch the top 5 batsmen who scored the maximum runs.
+ select t_name,p_id,p_fname ,sum(runs) as runs from Scores
+ group by 1,2,3
+ order by runs desc;
+5) Fetch the top 5 bowlers who has taken the maximum wickets.
+ select t_name,p_id,p_fname ,sum(wicket) as wick from Scores
+ group by 1,2,3
+ order by wick desc;
+6) Fetch the average score scored by each team considering the matches played. 
+
+
+DELIMITER $$
+ 
+CREATE FUNCTION cal(test char(255)) RETURNS int (10)
+deterministic
+BEGIN
+    DECLARE x  int;
+    Declare var char(255);
+    set var = test;
+    
+    select played into x
+    from MatchPlayed a
+    where var = a.t_name;
+ RETURN x;
+END$$
+DELIMITER //
+
+
+
+select t_name, sum(runs)/cal(t_name) as avg
+from team_stats
+group by 1
+order by avg ;
+
+7) Increase the scores of each batsmen in the team, which has the least average computed in Step 6, by 10 runs.
+
+update Scores 
+set runs = runs+10
+where t_name = "NewZeland" and mod(p_id,2) = 1;
+
+Ensure that all the queries are ANSI compliant. Please share the script file with me in github which I can directly import and execute(should include the sample data created as well). I expect the script to run without any modifications.
