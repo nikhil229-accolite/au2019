@@ -1,0 +1,4 @@
+getDummyEmp: http://localhost:8080/ResrAssignment/service/getDummyEmp?id=1
+add: http://localhost:8080/ResrAssignment/service/add?id=3&firstName=arya&lastName=stark&age=15
+getAll: http://localhost:8080/ResrAssignment/service/getAll
+deleteEmp: http://localhost:8080/ResrAssignment/service/deleteEmp?id=1
