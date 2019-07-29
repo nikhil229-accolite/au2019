@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<employee id="1">
+    <address>
+        <city>castly rock</city>
+        <state>westros</state>
+        <street>21</street>
+        <zip>304040</zip>
+    </address>
+    <firstName>jamie</firstName>
+    <lastName>lanister</lastName>
+</employee>
