@@ -1,0 +1,15 @@
+location /assets/{
+        	proxy_pass http://localhost:80/contentserver/;
+        }
+
+        location ~* \(a-jA-J].*)${
+        	proxy_pass http://localhost:8085/s1/;
+        }
+
+        location ~* \([k-sK-S].*)${
+        	proxy_pass http://localhost:8090/s2/;
+        }
+
+        location ~* \([t-zT-Z].*)${
+        	proxy_pass http://localhost:8095/s3/;
+        }
