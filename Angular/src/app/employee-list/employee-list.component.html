@@ -1,0 +1,15 @@
+<div >
+    <h2>Employees</h2>
+    <div *ngFor="let e of empDataArray">
+
+        <a  (click) = "showDetails(e)">
+        {{e.firstName}} {{e.lastName}}
+        </a>
+        
+        <button *ngIf="_router == '/employeeList'" (click) = "deleteEmployee(e)">Delete</button>
+
+
+    </div>
+    
+
+</div>

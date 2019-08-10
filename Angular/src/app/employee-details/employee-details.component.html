@@ -1,0 +1,33 @@
+<div *ngIf=" !(_router.substring(1) == 'todo') " style="float:left;">
+    <h1>Details</h1>
+    <p>First Name: {{emp.firstName}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.firstName"></div>
+    <p>userId:{{emp.userId}} </p>
+    <div *ngIf="_router.includes('employee')"><input (keyUp)="showUpdatedItem(emp)" type="text" *ngIf="showText"
+            [(ngModel)]="emp.userId"></div>
+    <p>jobTitleName: {{emp.jobTitleName}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.jobTitleName"></div>
+    <p>lastName: {{emp.lastName}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.lastName"></div>
+    <p>preferredFullName: {{emp.preferredFullName}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.preferredFullName"></div>
+    <p>employeeCode: {{emp.employeeCode}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.employeeCode"></div>
+    <p>region: {{emp.region}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.region"></div>
+    <p>phoneNumber : {{emp.phoneNumber}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.phoneNumber"></div>
+    <p>emailAddress : {{emp.emailAddress}}</p>
+    <div *ngIf="_router.includes('employee')"><input *ngIf="showText" (keyUp)="showUpdatedItem(emp)" type="text"
+            [(ngModel)]="emp.emailAddress"></div>
+
+
+    <button *ngIf="_router.includes('employee')" (click)="showInput()">Update</button>
+</div>
